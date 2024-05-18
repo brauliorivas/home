@@ -15,4 +15,4 @@ permissions:
 
 jobs:
   build-preview:
-    uses: ./.github/workflows/preview.yaml
+    uses: ./.github/workflows/preview.yml
