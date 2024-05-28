@@ -21,7 +21,7 @@ jobs:
                   ref: ${{ github.event.pull_request.head.sha }}
 
             - name: Deploy to GH-Pages
-              uses: redsparr0w/pr-preview-action@e42785b6369079700cfd810f51d14da466ea5cce
+              uses: rossjrw/pr-preview-action@v1
               id: preview_step
               if: contains(['opened', 'reopened', 'synchronize'], ${{ github.event.action }})
               with:
@@ -33,7 +33,7 @@ jobs:
                   action: auto
 
             - name: Remove preview
-              uses: redsparr0w/pr-preview-action@e42785b6369079700cfd810f51d14da466ea5cce
+              uses: rossjrw/pr-preview-action@v1
               if: github.event.action == 'closed' && !github.event.pull_request.merged
               with:
                   source-dir: .
