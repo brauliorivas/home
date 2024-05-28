@@ -1,34 +1,44 @@
-name: on-pull-request
-run-name: on pull request activity
+name: PR preview
 
 on:
-  pull_request_target:
-    types:
-      - opened
-      - reopened
-      - synchronize
-      - closed
-
-permissions:
-  contents: write
-  pull-requests: write
+    pull_request_target:
+        types:
+            - opened
+            - reopened
+            - synchronize
+            - closed
 
 jobs:
-  deploy-preview:
+    deploy-preview:
+        environment: github-pages
         runs-on: ubuntu-latest
+        permissions:
+            pull-requests: write
         steps:
-            - uses: actions/checkout@v3
-            - uses: rossjrw/pr-preview-action@v1
+            - name: Checkout PR
+              uses: actions/checkout@v3
+              with:
+                  ref: ${{ github.event.pull_request.head.sha }}
+
+            - name: Deploy to GH-Pages
+              uses: redsparr0w/pr-preview-action@e42785b6369079700cfd810f51d14da466ea5cce
+              id: preview_step
               if: contains(['opened', 'reopened', 'synchronize'], ${{ github.event.action }})
               with:
                   source-dir: .
                   preview-branch: gh-pages
                   umbrella-dir: pr-preview
+                  deploy-repository: "JavascriptMadness/home"
+                  token: ${{ secrets.TOKEN }}
                   action: auto
-            - uses: rossjrw/pr-preview-action@v1
+
+            - name: Remove preview
+              uses: redsparr0w/pr-preview-action@e42785b6369079700cfd810f51d14da466ea5cce
               if: github.event.action == 'closed' && !github.event.pull_request.merged
               with:
                   source-dir: .
                   preview-branch: gh-pages
                   umbrella-dir: pr-preview
+                  deploy-repository: "JavascriptMadness/home"
+                  token: ${{ secrets.TOKEN }}
                   action: remove
