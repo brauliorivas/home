@@ -10,6 +10,7 @@ jobs:
             repository: ${{ github.event.pull_request.head.sha }}
 
     deploy-preview:
+        needs: test
         environment: github-pages
         runs-on: ubuntu-latest
         permissions:
