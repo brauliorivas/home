@@ -16,7 +16,7 @@ jobs:
                   ref: ${{ github.event.pull_request.head.sha }}
 
             - name: Test PR
-              uses: ./.github/workflows/test.yml
+              uses: ./test.yml
 
             - name: Deploy to GH-Pages
               uses: rossjrw/pr-preview-action@v1
