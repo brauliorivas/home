@@ -5,7 +5,9 @@ on:
         types: [opened, reopened, synchronize, closed]
 jobs:
     test:
-        uses: JavascriptMadness/home/.github/workflows/test.yml@main
+        uses: JavascriptMadness/home/.github/workflows/test-previews.yml@main
+        with:
+            repository: ${{ github.event.pull_request.head.sha }}
 
     deploy-preview:
         environment: github-pages
