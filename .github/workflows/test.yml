@@ -2,6 +2,7 @@ name: Test
 on:
     push:
         branches: [main, release]
+    workflow_call:
 
 jobs:
     test:
