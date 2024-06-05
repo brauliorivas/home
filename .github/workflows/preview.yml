@@ -1,12 +1,10 @@
 name: PR preview
 concurrency: preview-${{ github.ref }}
 on:
-    pull_request:
+    workflow_run:
+        workflows: [Build and test]
         types:
-            - opened
-            - reopened
-            - synchronize
-            - closed
+          - completed
 jobs:
     deploy-preview:
         runs-on: ubuntu-latest
